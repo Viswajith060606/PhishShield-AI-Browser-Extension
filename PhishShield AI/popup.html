@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PhishShield AI Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+  <div class="app-container">
+    <!-- Header -->
+    <header class="header">
+      <div class="brand">
+        <div class="logo-shield">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+          </svg>
+        </div>
+        <div>
+          <h1 class="app-title">PhishShield AI</h1>
+          <span class="app-subtitle">100% Standalone Shield</span>
+        </div>
+      </div>
+      <div class="header-right">
+        <button id="settings-btn" class="icon-btn" title="Extension Settings">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="3"></circle>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Manual URL Scanner Bar -->
+    <div class="manual-scan-card">
+      <label class="scan-label" for="manual-url-input">MANUAL URL CHECKER</label>
+      <div class="scan-input-group">
+        <input type="text" id="manual-url-input" class="scan-input" placeholder="Paste or type URL (e.g. google.com)" />
+        <button id="manual-scan-btn" class="btn-scan" title="Check URL Security">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          Check
+        </button>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="content">
+      <!-- Loading State -->
+      <div id="loading-state" class="state-container">
+        <div class="spinner"></div>
+        <p class="loading-text">Scanning security vectors...</p>
+      </div>
+
+      <!-- Unsupported Page State -->
+      <div id="unsupported-state" class="state-container hidden">
+        <div class="info-icon">ℹ️</div>
+        <p class="info-title">System Page</p>
+        <p class="info-desc">PhishShield active scanner cannot run on internal browser pages.</p>
+      </div>
+
+      <!-- Dashboard View -->
+      <div id="dashboard-view" class="hidden">
+        <!-- URL Banner -->
+        <div class="url-card">
+          <span class="url-label">CURRENT URL</span>
+          <div id="current-url" class="url-text">https://example.com</div>
+        </div>
+
+        <!-- Threat Gauge & Score Section -->
+        <div class="gauge-section">
+          <div class="gauge-container">
+            <svg class="gauge-svg" viewBox="0 0 120 120">
+              <circle class="gauge-bg" cx="60" cy="60" r="50"></circle>
+              <circle id="gauge-fill" class="gauge-fill safe" cx="60" cy="60" r="50"></circle>
+            </svg>
+            <div class="gauge-center">
+              <span id="gauge-percent" class="gauge-value">0%</span>
+              <span class="gauge-sub">Threat Score</span>
+            </div>
+          </div>
+
+          <div class="verdict-meta">
+            <div id="verdict-badge" class="verdict-badge safe">SAFE</div>
+            <div class="confidence-text">
+              Confidence: <span id="confidence-val">0%</span>
+            </div>
+            <div class="source-tag">
+              Engine: <span id="engine-val">Standalone Client ML</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Explanation Card -->
+        <div class="card explanation-card">
+          <div class="card-header">
+            <svg class="card-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="16" x2="12" y2="12"></line>
+              <line x1="12" y1="8" x2="12.01" y2="8"></line>
+            </svg>
+            Security Assessment
+          </div>
+          <p id="user-explanation" class="explanation-text">
+            Analyzing page parameters...
+          </p>
+        </div>
+
+        <!-- Threat Reasons List -->
+        <div class="card threats-card">
+          <div class="card-header">
+            <svg class="card-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+              <line x1="12" y1="9" x2="12" y2="13"></line>
+              <line x1="12" y1="17" x2="12.01" y2="17"></line>
+            </svg>
+            Threat Vectors Identified
+          </div>
+          <ul id="threat-list" class="threat-list">
+            <!-- Dynamic items -->
+          </ul>
+        </div>
+
+        <!-- Feature Metrics Grid -->
+        <div class="metrics-grid">
+          <div class="metric-item">
+            <span class="metric-label">PhishTank Status</span>
+            <span id="metric-phishtank" class="metric-val">Checked</span>
+          </div>
+          <div class="metric-item">
+            <span class="metric-label">Domain Age (RDAP)</span>
+            <span id="metric-domainage" class="metric-val">--</span>
+          </div>
+          <div class="metric-item">
+            <span class="metric-label">HTTPS Security</span>
+            <span id="metric-https" class="metric-val">--</span>
+          </div>
+          <div class="metric-item">
+            <span class="metric-label">Form Trap Engine</span>
+            <span id="metric-formtrap" class="metric-val">Active</span>
+          </div>
+          <div class="metric-item">
+            <span class="metric-label">Visual AI Check</span>
+            <span id="metric-visionai" class="metric-val">Multimodal</span>
+          </div>
+          <div class="metric-item">
+            <span class="metric-label">Punycode / Subdomains</span>
+            <span id="metric-punycode" class="metric-val">--</span>
+          </div>
+        </div>
+
+        <!-- Footer Actions -->
+        <div class="footer-actions">
+          <button id="rescan-btn" class="btn btn-primary">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="23 4 23 10 17 10"></polyline>
+              <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+            </svg>
+            Re-scan
+          </button>
+          <button id="export-btn" class="btn btn-secondary">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="7 10 12 15 17 10"></polyline>
+              <line x1="12" y1="15" x2="12" y2="3"></line>
+            </svg>
+            Export
+          </button>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

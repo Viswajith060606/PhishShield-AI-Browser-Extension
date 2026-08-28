@@ -1,0 +1,48 @@
+{
+  "manifest_version": 3,
+  "name": "PhishShield AI - Phishing URL Detector",
+  "version": "2.0.0",
+  "description": "100% Standalone AI Phishing URL Detection powered by PhishTank Threat Intelligence, Local ML Engine, and Gemini LLM.",
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "storage",
+    "declarativeNetRequest"
+  ],
+  "host_permissions": [
+    "https://checkurl.phishtank.com/*",
+    "https://generativelanguage.googleapis.com/*",
+    "https://rdap.org/*",
+    "http://*/*",
+    "https://*/*"
+  ],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "options_page": "options.html",
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  }
+}
