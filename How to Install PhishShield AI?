@@ -1,0 +1,13 @@
+1.Download the Repository:
+Get the extension source files to your local machine.
+Click the green Code button on the GitHub repository page.
+Select Download ZIP and extract the folder to a convenient location on your computer.(Alternatively, if you use Git, run git clone <repository-url> in your terminal.)
+2.Enable Developer Mode in Chrome:
+Prerequisite for loading unpacked extensions.
+Open Google Chrome and navigate to chrome://extensions in the address bar.
+In the top-right corner, toggle the Developer mode switch to ON.
+3.Load the Unpacked Extension:
+Inject the Manifest V3 extension into Chrome.
+Click the Load unpacked button that appears in the top-left toolbar.
+Select the extracted project folder (the directory containing the manifest.json file).
+PhishShield AI will now appear in your list of extensions and install to your browser toolbar.
